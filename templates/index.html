@@ -177,29 +177,128 @@
 
         </a>
 
-        <!-- SOON -->
+<!-- MORE PLATFORMS -->
 
-        <div class="card">
+<div class="card more-card" onclick="togglePlatforms()">
 
-            <div class="emoji">
-                🚀
+    <div class="emoji">
+        🚀
+    </div>
+
+    <h3>
+        More Platforms
+    </h3>
+
+    <p>
+        Click to view supported platforms...
+    </p>
+
+</div>
+
+<!-- POPUP -->
+
+<div class="platform-popup" id="platformPopup">
+
+    <div class="popup-box">
+
+        <h2>
+            AVAILABLE DOWNLOADERS
+        </h2>
+
+        <!-- YOUTUBE -->
+
+        <div class="platform-item">
+
+            <div>
+                🎥 YouTube Downloader
             </div>
 
-            <h3>
+            <span>
                 Soon
-            </h3>
+            </span>
 
-            <p>
-                More platforms coming soon...
-            </p>
+        </div>
+
+        <!-- INSTAGRAM -->
+
+        <div class="platform-item">
+
+            <div>
+                📸 Instagram Downloader
+            </div>
+
+            <span>
+                Soon
+            </span>
+
+        </div>
+
+        <!-- TWITTER -->
+
+        <div class="platform-item">
+
+            <div>
+                🐦 X/Twitter Downloader
+            </div>
+
+            <span>
+                Soon
+            </span>
+
+        </div>
+
+        <!-- ANY LINK -->
+
+        <div class="platform-item active-platform">
+
+            <div>
+                🌐 By Any Link Downloader
+            </div>
+
+            <span>
+                Experimental
+            </span>
+
+        </div>
+
+        <!-- ANY LINK BOX -->
+
+        <div class="any-link-box">
+
+            <input
+                type="text"
+                id="anyLinkInput"
+                placeholder="Paste any media link..."
+            >
+
+            <button onclick="scanAnyLink()">
+                SCAN LINK
+            </button>
+
+        </div>
+
+        <!-- TERMINAL -->
+
+        <div class="scan-terminal" id="scanTerminal">
+
+            Waiting for scan...
+
+        </div>
+
+        <!-- ACTIONS -->
+
+        <div class="scan-actions" id="scanActions">
+
+            <button>
+                DOWNLOAD FILE
+            </button>
+
+            <button>
+                DOWNLOAD AUDIO
+            </button>
 
         </div>
 
     </div>
 
 </div>
-
-<script src="{{ url_for('static', filename='script.js') }}"></script>
-
-</body>
-</html>
