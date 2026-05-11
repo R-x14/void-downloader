@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VOID.SYS</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<div class="lines">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<div class="nav">
+
+    <div class="logo">
+        VOID<span>.SYS</span>
+    </div>
+
+    <div class="status">
+        <div class="dot"></div>
+        SYSTEM ONLINE
+    </div>
+
+</div>
+
+<div class="main">
+
+    <div class="terminal">
+
+        <div class="top">
+
+            <div class="left-top">
+
+                <div class="circle red"></div>
+                <div class="circle yellow"></div>
+                <div class="circle green"></div>
+
+            </div>
+
+            <div class="path">
+                root@void:/tiktok/downloader
+            </div>
+
+        </div>
+
+        <div class="content">
+
+            <div class="command">
+                > EXECUTE <span>TIKTOK_DOWNLOADER</span>
+            </div>
+
+            <h1 class="title">
+                TIKTOK
+                <span>DOWNLOADER</span>
+            </h1>
+
+            <p class="desc">
+                Download TikTok videos without watermark.
+            </p>
+
+            <div class="box">
+
+                <div class="input-wrap">
+
+                    <div class="prefix">
+                        URL >
+                    </div>
+
+                    <input
+                        type="text"
+                        class="input"
+                        id="url"
+                        placeholder="https://www.tiktok.com/..."
+                    >
+
+                </div>
+
+                <div class="buttons">
+
+                    <button class="btn" onclick="downloadVideo()">
+                        DOWNLOAD VIDEO
+                    </button>
+
+                    <button class="btn" onclick="downloadAudio()">
+                        EXTRACT AUDIO
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div id="status"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/static/script.js"></script>
+
+</body>
+</html>
