@@ -239,3 +239,246 @@ function scanAnyLink(){
 
     }, 4500);
 }
+// =========================
+// ANY LINK REAL DOWNLOAD
+// =========================
+
+let currentLink = null;
+
+// SCAN
+
+async function scanAnyLink(){
+
+    const input =
+        document.getElementById(
+            "anyLinkInput"
+        ).value;
+
+    const terminal =
+        document.getElementById(
+            "scanTerminal"
+        );
+
+    const actions =
+        document.getElementById(
+            "scanActions"
+        );
+
+    if(!input){
+
+        terminal.innerHTML =
+            "Please enter media link";
+
+        return;
+    }
+
+    currentLink = input;
+
+    actions.style.display = "none";
+
+    const steps = [
+
+        "Scanning URL...",
+
+        "Detecting platform...",
+
+        "Checking downloadable media...",
+
+        "Preparing downloader..."
+
+    ];
+
+    let i = 0;
+
+    terminal.innerHTML = steps[0];
+
+    const animation = setInterval(() => {
+
+        i++;
+
+        if(i < steps.length){
+
+            terminal.innerHTML =
+                steps[i];
+        }
+
+    }, 900);
+
+    setTimeout(() => {
+
+        clearInterval(animation);
+
+        let platform = "Unknown";
+
+        // TIKTOK
+
+        if(
+            input.includes("tiktok")
+        ){
+
+            platform = "TikTok";
+        }
+
+        // YOUTUBE
+
+        else if(
+            input.includes("youtube") ||
+            input.includes("youtu.be")
+        ){
+
+            platform = "YouTube";
+        }
+
+        // INSTAGRAM
+
+        else if(
+            input.includes("instagram")
+        ){
+
+            platform = "Instagram";
+        }
+
+        // TWITTER
+
+        else if(
+            input.includes("twitter") ||
+            input.includes("x.com")
+        ){
+
+            platform = "X/Twitter";
+        }
+
+        terminal.innerHTML =
+
+            "Platform Detected: " +
+            platform +
+
+            "<br><br>" +
+
+            "Download Available ✔";
+
+        actions.style.display =
+            "grid";
+
+    }, 3500);
+}
+
+// FILE DOWNLOAD
+
+async function anyDownloadFile(){
+
+    if(!currentLink) return;
+
+    const terminal =
+        document.getElementById(
+            "scanTerminal"
+        );
+
+    terminal.innerHTML =
+        "Downloading file...";
+
+    const response = await fetch(
+        "/download",
+        {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":
+                "application/json"
+            },
+
+            body: JSON.stringify({
+
+                url: currentLink,
+
+                mode: "video"
+
+            })
+        }
+    );
+
+    const data =
+        await response.json();
+
+    if(data.status === "success"){
+
+        terminal.innerHTML =
+
+            "Download Ready ✔";
+
+        window.location.href =
+
+            "/file?path=" +
+
+            encodeURIComponent(
+                data.file
+            );
+    }
+
+    else{
+
+        terminal.innerHTML =
+            data.message;
+    }
+}
+
+// AUDIO DOWNLOAD
+
+async function anyDownloadAudio(){
+
+    if(!currentLink) return;
+
+    const terminal =
+        document.getElementById(
+            "scanTerminal"
+        );
+
+    terminal.innerHTML =
+        "Extracting audio...";
+
+    const response = await fetch(
+        "/download",
+        {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":
+                "application/json"
+            },
+
+            body: JSON.stringify({
+
+                url: currentLink,
+
+                mode: "audio"
+
+            })
+        }
+    );
+
+    const data =
+        await response.json();
+
+    if(data.status === "success"){
+
+        terminal.innerHTML =
+
+            "MP3 Ready ✔";
+
+        window.location.href =
+
+            "/file?path=" +
+
+            encodeURIComponent(
+                data.file
+            );
+    }
+
+    else{
+
+        terminal.innerHTML =
+            data.message;
+    }
+}
