@@ -24,9 +24,10 @@ def download():
     mode = data.get("mode")
 
     if not url:
+
         return jsonify({
             "status": "error",
-            "message": "Please enter TikTok URL"
+            "message": "No URL detected"
         })
 
     unique_id = str(uuid.uuid4())
@@ -43,19 +44,27 @@ def download():
             )
 
             ydl_opts = {
+
                 "format": "bestaudio/best",
+
                 "outtmpl": output_template,
+
                 "quiet": True,
+
                 "noplaylist": True,
 
                 "postprocessors": [{
+
                     "key": "FFmpegExtractAudio",
+
                     "preferredcodec": "mp3",
+
                     "preferredquality": "320"
+
                 }]
             }
 
-        # VIDEO
+        # FILE / VIDEO
 
         else:
 
@@ -65,43 +74,68 @@ def download():
             )
 
             ydl_opts = {
-                "format": "bestvideo+bestaudio/best",
+
+                "format": "best",
+
                 "outtmpl": output_template,
+
                 "merge_output_format": "mp4",
+
                 "quiet": True,
+
                 "noplaylist": True
             }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
-            info = ydl.extract_info(url, download=True)
+            info = ydl.extract_info(
+                url,
+                download=True
+            )
 
-            downloaded_file = ydl.prepare_filename(info)
+            file_path = ydl.prepare_filename(info)
 
             if mode == "audio":
-                downloaded_file = downloaded_file.rsplit(".", 1)[0] + ".mp3"
+
+                file_path = \
+                file_path.rsplit(".",1)[0] + ".mp3"
 
         return jsonify({
+
             "status": "success",
-            "file": downloaded_file
+
+            "file": file_path,
+
+            "title": info.get("title"),
+
+            "platform": info.get("extractor")
+
         })
 
     except Exception as e:
 
-        error_message = str(e)
+        error = str(e)
 
-        # PRIVATE VIDEO
+        # PRIVATE
 
-        if "You do not have permission to view this post" in error_message:
+        if "permission" in error.lower():
 
             return jsonify({
+
                 "status": "error",
-                "message": "المقطع خاص أو غير متاح للمشاهدة"
+
+                "message":
+                "Private or unavailable content"
+
             })
 
         return jsonify({
+
             "status": "error",
-            "message": "حدث خطأ أثناء التحميل"
+
+            "message":
+            "Unsupported or invalid link"
+
         })
 
 
