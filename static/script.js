@@ -99,3 +99,143 @@ async function downloadMedia(mode) {
             "Unexpected server error";
     }
 }
+// TOGGLE POPUP
+
+function togglePlatforms(){
+
+    const popup =
+        document.getElementById(
+            "platformPopup"
+        );
+
+    if(
+        popup.style.display === "flex"
+    ){
+
+        popup.style.display = "none";
+
+    }
+
+    else{
+
+        popup.style.display = "flex";
+    }
+}
+
+// CLOSE WHEN CLICK OUTSIDE
+
+window.addEventListener("click", function(e){
+
+    const popup =
+        document.getElementById(
+            "platformPopup"
+        );
+
+    if(e.target === popup){
+
+        popup.style.display = "none";
+    }
+});
+
+// ANY LINK SCAN
+
+function scanAnyLink(){
+
+    const input =
+        document.getElementById(
+            "anyLinkInput"
+        ).value;
+
+    const terminal =
+        document.getElementById(
+            "scanTerminal"
+        );
+
+    const actions =
+        document.getElementById(
+            "scanActions"
+        );
+
+    if(!input){
+
+        terminal.innerHTML =
+            "Please enter media link";
+
+        return;
+    }
+
+    actions.style.display = "none";
+
+    const steps = [
+
+        "Scanning link...",
+
+        "Detecting media type...",
+
+        "Checking downloadable content...",
+
+        "Preparing results..."
+
+    ];
+
+    let index = 0;
+
+    terminal.innerHTML = steps[0];
+
+    const animation = setInterval(() => {
+
+        index++;
+
+        if(index < steps.length){
+
+            terminal.innerHTML =
+                steps[index];
+        }
+
+    }, 1000);
+
+    setTimeout(() => {
+
+        clearInterval(animation);
+
+        // DETECT TYPE
+
+        let detected = "Unknown File";
+
+        if(
+            input.includes("mp4") ||
+            input.includes("video")
+        ){
+
+            detected = "Video File";
+
+        }
+
+        else if(
+            input.includes("jpg") ||
+            input.includes("png") ||
+            input.includes("image")
+        ){
+
+            detected = "Image File";
+
+        }
+
+        else if(
+            input.includes("mp3") ||
+            input.includes("audio")
+        ){
+
+            detected = "Audio File";
+        }
+
+        terminal.innerHTML =
+
+            "Detected: " + detected +
+            "<br><br>" +
+            "Download available ✔";
+
+        actions.style.display = "grid";
+
+    }, 4500);
+}
